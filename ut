@@ -1,0 +1,31 @@
+#!/bin/sh
+#
+# kata, a script for starting up a new kata exercise
+#
+# Given a name for the kata the script will create 2
+# files. One with the same name as the kata with '.py' 
+# extension added to the end and another named the kata name
+# followed by '_test.py'. It will be opened in a 3 window 
+# layout of Vim with a vertical terminal to the left in which 
+# you can run 'pytest' or 'python -m unittest' or whatever 
+# appropriate runner you use.
+# 
+# If these files don't alreay exist they will be created
+# with an import , and basic docstrings.
+#
+
+if [ $# -eq 0 ]; then
+    printf "Usage:\n\t $0 <kataname>\n"
+    exit 0
+fi
+
+if [ ! -f "$1.py" ]; then
+    printf '"""%s module."""\n\n' "$1" > "$1.py"
+fi
+
+if [ ! -f "$1_test.py" ]; then
+    printf '"""Unit tests for %s module."""\n\n\n' "$1" > "$1_test.py"
+    printf 'import %s\n\n' "$1" >> "$1_test.py"
+fi
+
+vim -c ':vert topleft term' -c 'wincmd p' -o "$1.py" "$1_test.py"
