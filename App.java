@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.util.Random;
 
+// This is the application
 public class App extends JFrame implements ActionListener {
     private static final int DELAY = 100;
     private static final int gridWidth = 100;
